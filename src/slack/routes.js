@@ -7,7 +7,7 @@ const slackbot = require('./api.js');
 
 const expectedQuoteObject = {
   id: 1,
-  quote: 'This is so inpiring.',
+  quote: 'Be inspired, friend! You are doing great!',
   author: 'me'
 };
 
