@@ -10,4 +10,9 @@ router.post('/slack/testcommand', (request, response) => {
   response.status(200).send();
 });
 
+router.post('/slack/echo', (request, response) => {
+  slackbot.sendMessage('command-testing', request.body);
+  response.status(200).send();
+});
+
 module.exports = router;
