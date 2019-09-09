@@ -1,0 +1,25 @@
+{
+  "name": "slack-spike",
+  "version": "1.0.0",
+  "description": "A spike to test a proof-of-concept for posting messages via Slack bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/austinhedeen-401-advanced-javascript/slack-spike.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/austinhedeen-401-advanced-javascript/slack-spike/issues"
+  },
+  "homepage": "https://github.com/austinhedeen-401-advanced-javascript/slack-spike#readme",
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "superagent": "^5.1.0",
+    "unirest": "^0.6.0"
+  }
+}
