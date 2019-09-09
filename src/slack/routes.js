@@ -10,6 +10,7 @@ const expectedQuoteObject = {
   quote: 'Be inspired, friend! You are doing great!',
   author: 'me',
   img_url: 'https://previews.123rf.com/images/teploleta/teploleta1506/teploleta150600159/41724569-you-are-amazing-hand-drawn-calligraphic-inspiration-quote-on-a-watercolor-background-.jpg',
+  video_url: 'https://www.youtube.com/watch?v=m8AXUq5uA0Y',
 };
 
 router.post('/slack/testcommand', (request, response) => {
@@ -26,7 +27,9 @@ router.post('/slack/echo', (request, response) => {
 
 router.post('/slack/inspireme', (request, response) => {
   const channelName = request.body.channel_name;
-  slackbot.sendMessage(channelName, expectedQuoteObject.img_url);
+  // slackbot.sendMessage(channelName, expectedQuoteObject.text);
+  // slackbot.sendMessage(channelName, expectedQuoteObject.img_url);
+  slackbot.sendMessage(channelName, expectedQuoteObject.video_url);
   response.status(200).send();
 });
 
