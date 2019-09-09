@@ -17,15 +17,15 @@ router.post('/slack/testcommand', (request, response) => {
 });
 
 router.post('/slack/echo', (request, response) => {
-  const channelId = request.body.channel_id; 
-  slackbot.postMessageToChannel(channelId, request.body.text);
+  const channelName = request.body.channel_name; 
+  slackbot.sendMessage(channelName, request.body.text);
   response.status(200).send();
 });
 
 
 router.post('/slack/inspireme', (request, response) => {
-  const channelId = request.body.channel_id;
-  slackbot.postMessageToChannel(channelId, expectedQuoteObject.quote);
+  const channelName = request.body.channel_name;
+  slackbot.sendMessage(channelName, expectedQuoteObject.quote);
   response.status(200).send();
 });
 
