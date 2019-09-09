@@ -9,7 +9,7 @@ const expectedQuoteObject = {
   id: 1,
   quote: 'Be inspired, friend! You are doing great!',
   author: 'me',
-  img_url: 'https://i.ytimg.com/vi/-pYuSSP5Wls/maxresdefault.jpg',
+  img_url: 'https://previews.123rf.com/images/teploleta/teploleta1506/teploleta150600159/41724569-you-are-amazing-hand-drawn-calligraphic-inspiration-quote-on-a-watercolor-background-.jpg',
 };
 
 router.post('/slack/testcommand', (request, response) => {
