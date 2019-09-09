@@ -5,7 +5,9 @@ require('dotenv').config();
 const superagent = require('superagent');
 
 const TOKEN = process.env.ACCESS_TOKEN;
+
 const library = require('./quotes/index.js');
+
 const generateQuotes = require('./quotes/generator.js');
 
 const CONVERSATIONS_LIST_URL = `https://slack.com/api/conversations.list?token=${TOKEN}`;
