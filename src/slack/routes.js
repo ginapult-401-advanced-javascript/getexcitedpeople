@@ -11,7 +11,7 @@ router.post('/slack/testcommand', (request, response) => {
 });
 
 router.post('/slack/echo', (request, response) => {
-  slackbot.sendMessage('command-testing', request.body);
+  slackbot.sendMessage('command-testing', request.body.text);
   response.status(200).send();
 });
 
