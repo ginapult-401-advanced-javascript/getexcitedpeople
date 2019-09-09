@@ -1,6 +1,6 @@
 'use strict';
 
-const library = require('./data.js');
+const library = require('../src/quotes/data.js/index.js');
 const generateQuotes = require('./quotes/generator.js');
 let generatedQuotes = generateQuotes(library);
 const MESSAGE = generatedQuotes || 'Get excited, people!';
