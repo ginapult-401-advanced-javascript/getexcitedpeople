@@ -8,7 +8,8 @@ const slackbot = require('./api.js');
 const expectedQuoteObject = {
   id: 1,
   quote: 'Be inspired, friend! You are doing great!',
-  author: 'me'
+  author: 'me',
+  img_url: 'https://i.ytimg.com/vi/-pYuSSP5Wls/maxresdefault.jpg',
 };
 
 router.post('/slack/testcommand', (request, response) => {
@@ -25,7 +26,8 @@ router.post('/slack/echo', (request, response) => {
 
 router.post('/slack/inspireme', (request, response) => {
   const channelName = request.body.channel_name;
-  slackbot.sendMessage(channelName, expectedQuoteObject.quote);
+  slackbot.sendMessage(channelName, expectedQuoteObject.text);
+  slackbot.sendMessage(channelName, expectedQuoteObject.img_url);
   response.status(200).send();
 });
 
