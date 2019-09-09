@@ -48,4 +48,4 @@ const sendMessage = (channelName, message) => {
   .catch(console.error);
 }
 
-module.exports = {sendMessage};
+module.exports = {sendMessage, postMessageToChannel};
