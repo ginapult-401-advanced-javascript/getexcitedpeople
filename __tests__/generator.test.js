@@ -1,12 +1,12 @@
 'use strict';
 
-let quotesLibrary = require('../src/quotes/data.js');
-let generatedQuotes = require('../src/quotes/generator.js');
+let contentLibrary = require('../src/content/data.js');
+let generatedContent = require('../src/content/generator.js');
 
 describe('can it randomly generate a new number/quote each time it is called', () => {
   test('can generate a random quote', () => {
-    expect(generatedQuotes(quotesLibrary)).toHaveReturned();
-    }
+    expect(generatedContent(contentLibrary)).toHaveReturned();
+  }
   );
 });
 

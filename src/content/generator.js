@@ -1,6 +1,6 @@
 'use strict';
 
-function generatedQuotes(contents, userId){
+function generatedContent(contents, userId){
   let count = contents.length; 
   let randomId = Math.floor((Math.random()* count) + 1);
   console.log(randomId);
@@ -14,6 +14,6 @@ function generatedQuotes(contents, userId){
   return result;
 }
 
-const library = require('./data');
+const library = require('./content-library');
 
-module.exports = {getInspiration: userId => generatedQuotes((library))};
+module.exports = {getInspiration: userId => generatedContent((library))};

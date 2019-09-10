@@ -1,7 +1,7 @@
 'use strict';
 
 let roleSchema = require('./role');
-let quotesSchema = require('../../quotes/quoteSchema.js');
+let contentSchema = require('../../content/content-schema.js/index.js');
 
 const mongoose = require('mongoose');
 
@@ -24,8 +24,8 @@ userSchema.virtual('capabilities', {
   justOne: false,
 });
 
-userSchema.virtual('quotes', {
-  ref: 'quoteSchema',
+userSchema.virtual('content', {
+  ref: 'contentSchema',
   localField: 'user_id',
   foreignField: 'user_id',
   justOne: false,
@@ -34,12 +34,38 @@ userSchema.virtual('quotes', {
 userSchema.pre('findOne', async function(){
   try{
     this.populate('capabilities');
-    this.populate('quotes');
+    this.populate('content');
   }
   catch(e){
     console.log('there is an error in pre find async function');
   }
 });
+
+userSchema.statics.checkSlackId = function(user_id){
+  try {
+    const query = {user_id: user_id};
+    const user = this.findOne(query);
+    if (user) {
+      return user.user_id;
+    } else {
+      const userData = {
+        user_id: user_id,
+        user_role: user,
+      };
+      const newUser = new userSchema(userData);
+      newUser.save()
+        .then(user => {
+          return user.user_id; 
+          // response.set('role', auth.role);
+        });
+    } 
+  } catch(err) {
+    console.error(`Error ${err}`);
+  }
+};
+
+
+
 
 
 module.exports = mongoose.model('userSchema', userSchema);
