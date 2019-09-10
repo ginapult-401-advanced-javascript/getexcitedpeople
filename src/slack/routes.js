@@ -5,6 +5,10 @@ const router = express.Router();
 
 const slackbot = require('./api.js');
 
+
+const quoteGenerator = require('../quotes/generator.js'); //imports the random content generator functionality
+const userSchema = require('../models/auth/users-model.js'); //imports the userSchema/model 
+
 const resourceServer = require('../quotes/generator.js');
 
 router.post('/slack/ngrok', (request, response) => {
@@ -20,6 +24,47 @@ router.post('/slack/echo', (request, response) => {
 
 router.post('/slack/inspire-help', (request, response) => {
   const channelName = request.body.channel_name;
+
+  try {
+    let query = {user_id: request.user_id};
+    if (this.findOne(query)) {
+      return (this.findOne(query));
+    } else {
+      let newUser = {
+        user_id: request.user_id,
+        user_role: user,
+      };
+      let user = new userSchema(newUser);
+      user.save()
+        .then(user => {
+          response.user = user;
+          return user; 
+          // response.set('role', auth.role);
+        });
+    } 
+  } catch(err) {
+    console.error(`Error ${err}`);
+  }
+  // slackbot.sendMessage(channelName, expectedQuoteObject.text);
+  // slackbot.sendMessage(channelName, expectedQuoteObject.img_url);
+  slackbot.sendMessage(channelName, expectedQuoteObject.song_url);
+  response.status(200).send();
+});
+
+
+router.post('/slack/inspirehelp', (request, response) => {
+  
+});
+
+router.post('/slack/inspirecreate', (request, response) => {
+  quoteGenerator(request.body);
+  response.status(200).send();
+});
+
+router.post('/slack/inspireupdate', (request, response) => {
+  // const text = request.body.text;
+
+=======
   const userId = request.body.user_id;
   // TODO: /slack/inspire-help command
   response.status(200).send('Sending help!');
