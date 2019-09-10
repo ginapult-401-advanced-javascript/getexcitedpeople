@@ -8,14 +8,14 @@ const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
   user_id: {type:String, required: true, unique:true},
   username: { type: String, required: true, unique: true },
-  role: { type: String, required: true, default: 'user', enum: ['user', 'admin'] }
+  role: { type: String, required: true, default: 'user', enum: ['user', 'admin'] },
 }, {
   toObject: {
     virtuals: true,
   },
   toJSON: {
     virtuals: true,
-  }
+  },
 });
 
 userSchema.virtual('capabilities', {
@@ -35,20 +35,21 @@ userSchema.pre('findOne', async function(){
 });
 
 //TODO: write functionality to compare ID 
-newUserSchema.statics.authenticateId = function(auth) {
+userSchema.statics.authenticateId = function(auth) {
   try {
     let query = {user_id: auth.user_id};
     if (this.findOne(query)) {
-    return (this.findOne(query));
+      return (this.findOne(query));
     } else {
       let user = new userSchema(auth.body);
       //TODO: move this to the signup route - new user being created 
       user.save()
-        .then(user) => {
+        .then(user => {
           auth.user = user;
           auth.set('role', auth.role);
+          // TODO: 'res' is not defined
           res.send(auth.role);
-        };
+        });
     } 
   } catch(err) {
     console.error(`Error ${err}`);
@@ -56,4 +57,4 @@ newUserSchema.statics.authenticateId = function(auth) {
 };
 
 
-module.exports = mongoose.model('users', newUserSchema);
+module.exports = mongoose.model('users', userSchema);
