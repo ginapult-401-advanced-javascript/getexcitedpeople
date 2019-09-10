@@ -7,5 +7,5 @@ describe('/inspireme starting route', () => {
   return mockRequest.post('/slack/inspireme')
   .then(results => {
     expect(results).toBeTruthy();
-  })
+  });
 });
