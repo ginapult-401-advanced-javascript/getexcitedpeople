@@ -37,15 +37,15 @@ const getChannelId = channelName => {
  */
 const postMessageToChannel = (channelId, message) => {
   return superagent.post(CHAT_POST_MESSAGE_URL)
-    .send({ "channel": channelId, "text": message })
+    .send({ 'channel': channelId, 'textl': message })
     .set('Content-type', 'application/json')
     .set('Authorization', `Bearer ${TOKEN}`);
 };
 
 const sendMessage = (channelName, message) => {
   getChannelId(channelName)
-  .then(channelId => postMessageToChannel(channelId, message))
-  .catch(console.error);
-}
+    .then(channelId => postMessageToChannel(channelId, message))
+    .catch(console.error);
+};
 
 module.exports = {sendMessage, postMessageToChannel};

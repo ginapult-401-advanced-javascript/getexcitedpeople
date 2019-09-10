@@ -41,7 +41,7 @@ let quotes = [
     id:7,
     quote:'The flower that blooms in adversity is the rarest and most beautiful of all.',
     author: 'Walt Disney Company',
-    img_url: 'https://i.ytimg.com/vi/lB4SvxKgpAU/maxresdefault.jpg'
+    img_url: 'https://i.ytimg.com/vi/lB4SvxKgpAU/maxresdefault.jpg',
   },
   {
     id:8,
@@ -59,7 +59,7 @@ let quotes = [
     id:10,
     quote:'Courage is the most important of all the virtues because without courage, you can\'t practice any other virtue consistently.',
     author: 'Maya Angelou',
-    img_url: 'https://amazinganimalphotos.com/wp-content/uploads/2013/04/cute-kitten-playing-with-bubbles-photo.png'
+    img_url: 'https://amazinganimalphotos.com/wp-content/uploads/2013/04/cute-kitten-playing-with-bubbles-photo.png',
   },
   {
     id:11,
