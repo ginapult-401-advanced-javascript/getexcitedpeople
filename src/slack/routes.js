@@ -43,6 +43,7 @@ router.post('/slack/inspireme', (request, response) => {
       user.save()
         .then(user => {
           response.user = user;
+          return user; 
           // response.set('role', auth.role);
         });
     } 
