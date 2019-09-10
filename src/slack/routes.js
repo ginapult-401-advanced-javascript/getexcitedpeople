@@ -29,7 +29,7 @@ router.post('/slack/inspireme', (request, response) => {
   const channelName = request.body.channel_name;
   // slackbot.sendMessage(channelName, expectedQuoteObject.text);
   // slackbot.sendMessage(channelName, expectedQuoteObject.img_url);
-  slackbot.sendMessage(channelName, expectedQuoteObject.video_url);
+  slackbot.sendMessage(channelName, expectedQuoteObject.song_url);
   response.status(200).send();
 });
 
