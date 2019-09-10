@@ -48,7 +48,7 @@ userSchema.statics.authenticateId = function(auth) {
           auth.user = user;
           auth.set('role', auth.role);
           // TODO: 'res' is not defined
-          res.send(auth.role);
+          // res.send(auth.role);
         });
     } 
   } catch(err) {
