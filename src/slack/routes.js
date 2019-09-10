@@ -30,7 +30,7 @@ router.post('/slack/inspire-help', (request, response) => {
 
 router.post('/slack/inspire-me', (request, response) => {
   const userId = request.body.user_id;
-  const inspirationObject = resourceServer.getInspiration(contents,userId);
+  const inspirationObject = resourceServer.getInspiration(userId);
   response.status(200).send(`${inspirationObject.content_id}: ${inspirationObject.content}`);
 });
 
