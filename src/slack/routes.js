@@ -6,6 +6,8 @@ const router = express.Router();
 const slackbot = require('./api.js');
 
 const resourceServer = require('../models/content/content-schema');
+const contents = require('../../content/content-library').contents;
+
 
 router.post('/slack/ngrok', (request, response) => {
   const userId = request.body.user_id;
@@ -29,7 +31,7 @@ router.post('/slack/inspire-help', (request, response) => {
 
 router.post('/slack/inspire-me', (request, response) => {
   const userId = request.body.user_id;
-  const inspirationObject = resourceServer.getInspiration(userId);
+  const inspirationObject = resourceServer.getInspiration(contents,userId);
   response.status(200).send(`${inspirationObject.content_id}: ${inspirationObject.content}`);
 });
 
