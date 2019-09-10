@@ -15,9 +15,6 @@ function generatedQuotes(quotes){
   return result;
 }
 
-/*
 const library = require('./data');
-let quotes = generatedQuotes(library);
-*/
 
-module.exports = generatedQuotes;
+module.exports = {getInspiration: userId => generatedQuotes((library))};
