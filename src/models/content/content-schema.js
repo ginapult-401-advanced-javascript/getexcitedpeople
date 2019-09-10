@@ -14,7 +14,7 @@ contentSchema.statics.getInspiration = function (contents, userId) {
   let result = {};
   contents.forEach(content => {
     if(content.content_id === randomId){
-      result = `${content.content}`;
+      result = content;
     }
   });
   return result;
