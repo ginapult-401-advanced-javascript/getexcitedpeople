@@ -8,7 +8,9 @@ const slackbot = require('./api.js');
 const resourceServer = require('../content/content-library');
 
 router.post('/slack/ngrok', (request, response) => {
-  response.status(200).send(request.body.channel_id);
+  const userId = request.body.user_id;
+  const inspirationObject = resourceServer.getInspiration(userId);
+  response.status(200).send(`${inspirationObject.content_id}: ${inspirationObject.content}`);
 });
 
 router.post('/slack/echo', (request, response) => {
