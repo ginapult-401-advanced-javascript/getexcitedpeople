@@ -37,7 +37,7 @@ router.post('/slack/inspireme', (request, response) => {
     } else {
       let newUser = {
         user_id: request.user_id,
-        user_role: user
+        user_role: user,
       };
       let user = new userSchema(newUser);
       user.save()
