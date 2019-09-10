@@ -7,20 +7,6 @@ const slackbot = require('./api.js');
 
 const resourceServer = require('../quotes/generator.js');
 
-const expectedInspirationQuote = {
-  _id: 1,
-  content: 'Be inspired, friend! You are doing great!',
-  author: 'me',
-  img_url: 'https://previews.123rf.com/images/teploleta/teploleta1506/teploleta150600159/41724569-you-are-amazing-hand-drawn-calligraphic-inspiration-quote-on-a-watercolor-background-.jpg',
-  song_url: 'https://soundcloud.com/officialbirdy/keeping-your-head-up-1',
-};
-
-const expectedInspirationUrl = {
-  _id: 2,
-  user_id: 'U23583',
-  content: 'https://soundcloud.com/officialbirdy/keeping-your-head-up-1',
-};
-
 router.post('/slack/ngrok', (request, response) => {
   response.status(200).send(request.body.channel_id);
 });
