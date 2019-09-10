@@ -6,7 +6,6 @@ const router = express.Router();
 const slackbot = require('./api.js');
 
 const resourceServer = require('../models/content/content-schema');
-const contents = require('../../content/content-library').contents;
 
 
 router.post('/slack/ngrok', (request, response) => {

@@ -8,7 +8,8 @@ const contentSchema = mongoose.Schema({
   type: {type: String, required: true },
 });
 
-contentSchema.statics.getInspiration = function (contents, userId) {
+contentSchema.statics.getInspiration = function (userId) {
+  let contents = require('../../content/content-library').contents;
   let count = contents.length; 
   let randomId = Math.floor((Math.random()* count) + 1);
   let result = {};
