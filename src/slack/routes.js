@@ -10,7 +10,7 @@ const expectedQuoteObject = {
   quote: 'Be inspired, friend! You are doing great!',
   author: 'me',
   img_url: 'https://previews.123rf.com/images/teploleta/teploleta1506/teploleta150600159/41724569-you-are-amazing-hand-drawn-calligraphic-inspiration-quote-on-a-watercolor-background-.jpg',
-  video_url: 'https://youtu.be/m8AXUq5uA0Y',
+  song_url: 'https://soundcloud.com/officialbirdy/keeping-your-head-up-1',
 };
 
 router.post('/slack/testcommand', (request, response) => {
