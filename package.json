@@ -1,0 +1,43 @@
+{
+  "name": "getexcitedpeople",
+  "version": "1.0.0",
+  "description": "curated, scheduled, on demand inspiration",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "lint": "eslint \"**/*.js\"",
+    "test": "jest --verbose --coverage",
+    "test-watch": "jest --watchAll --verbose --coverage",
+    "jsdoc": "jsdoc -c ./docs/config/jsdoc.config.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ginapult-401-advanced-javascript/getexcitedpeople.git"
+  },
+  "keywords": [],
+  "author": "Austin Hedeen, Gina Pultorak, Leyla Li, Lyndsey Thomas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ginapult-401-advanced-javascript/getexcitedpeople/issues"
+  },
+  "homepage": "https://github.com/ginapult-401-advanced-javascript/getexcitedpeople#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "cors": "^2.8.5",
+    "dotenv": "^8.1.0",
+    "eslint": "^6.3.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "jest": "^24.9.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb-memory-server": "^5.2.0",
+    "mongoose": "^5.6.11",
+    "mongoose-schema-jsonschema": "^1.2.1",
+    "morgan": "^1.9.1",
+    "superagent": "^5.1.0",
+    "util": "^0.12.1"
+  }
+}
