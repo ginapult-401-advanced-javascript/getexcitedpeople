@@ -5,7 +5,7 @@ const router = express.Router();
 
 const slackbot = require('./api.js');
 
-const resourceServer = require('../content/content-library');
+const resourceServer = require('../models/content/content-schema');
 
 router.post('/slack/ngrok', (request, response) => {
   const userId = request.body.user_id;

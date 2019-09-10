@@ -9,6 +9,20 @@ const contentSchema = mongoose.Schema({
   type: {type: String, required: true },
 });
 
+contentSchema.statics.getInspiration = function (contents, userId) {
+  let count = contents.length; 
+  let randomId = Math.floor((Math.random()* count) + 1);
+  let result = {};
+  contents.forEach(content => {
+    if(content.content_id === randomId){
+      result = `${content.content}`;
+    }
+  });
+  return result;
+};
+
+
+
 
 
 
