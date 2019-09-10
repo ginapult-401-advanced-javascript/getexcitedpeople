@@ -1,15 +1,14 @@
 'use strict';
 
-function generatedQuotes(quotes){
-  //we need to generate a random id
-  let randomId = Math.floor((Math.random()* 13) + 1);
-  //then we need to match the id with the id of the quote in the quote library
+function generatedQuotes(contents, userId){
+  let count = contents.length; 
+  let randomId = Math.floor((Math.random()* count) + 1);
   console.log(randomId);
   let result = {};
-  quotes.forEach(quote => {
-    if(quote.id === randomId){
-      result = `${quote.quote}  -By ${quote.author}`;
-      // console.log('this is the quote:', quote);
+  contents.forEach(content => {
+    if(content.content_id === randomId){
+      result = `${content.content}`;
+      // console.log('this is the content:', content);
     }
   });
   return result;
