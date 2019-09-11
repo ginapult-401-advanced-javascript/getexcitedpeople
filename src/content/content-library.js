@@ -1,5 +1,36 @@
 'use strict';
 
+const Content = require('../models/content/content-model.js');
+const schema = require('../models/content/content-schema.js');
+
+const content = new Content(schema);
+
+const getInspiration = userId => {
+  return content.get()
+    .then(allContent => {
+      const userContent = allContent.filter(content => content.user_id === userId);
+      const randomIndex = Math.floor(Math.random() * userContent.length);
+      return userContent[randomIndex];
+    })
+    .catch(console.error);
+};
+
+const createInspiration = (userId, newContent) => {
+  const contentObject = {
+    user_id: userId,
+    content: newContent,
+  };
+  return content.create(contentObject);
+};
+
+const updateInspiration = (userId, inspirationId, newContent) => {
+  return content.update(inspirationId, {content: newContent});
+};
+
+const deleteInspiration = (userId, inspirationId) => {
+  return content.delete(inspirationId);
+};
+
 let contents = [
   {
     content_id:1,
@@ -139,18 +170,10 @@ let contents = [
 
 ];
 
-function getInspiration (user_id){
-  let count = contents.length; 
-  let randomId = Math.floor((Math.random()* count) + 1);
-  console.log(randomId);
-  let result = {};
-  contents.forEach(content => {
-    if(content.content_id === randomId){
-      result = content;
-      // console.log('this is the content:', content);
-    }
-  });
-  return result;
-}
-
-module.exports = {'contents': contents, 'getInspiration': getInspiration};
+module.exports = {
+  'contents': contents,
+  getInspiration,
+  createInspiration,
+  updateInspiration,
+  deleteInspiration,
+};
