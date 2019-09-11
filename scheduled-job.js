@@ -14,7 +14,9 @@ function generateScheduleInspiration() {
 };
 
 function sendScheduledInspiration() {
-    slackBot.sendMessage(channelName, 'BE INSPIRED REGULARLY!!!!')
-    console.log('scheduled inspiration triggered');
+    generateScheduleInspiration()
+      .then(inspiration => slackBot.sendMessage(channelName, inspiration))
+      .catch(console.error);
+    console.log('Heroku log: Scheduled inspiration triggered');
 }
 sendScheduledInspiration();
