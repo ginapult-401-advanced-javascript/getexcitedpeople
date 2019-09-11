@@ -9,7 +9,10 @@ const channelName = 'bot-testing';
 function sendScheduledInspiration() {
   console.log('Heroku log: Scheduled inspiration triggered');
   return generateScheduleInspiration()
-    .then(inspiration => slackBot.sendMessage(channelName, inspiration))
+    .then(inspiration => {
+      const message = `${inspiration._id} ${inspiration.content}`;
+      slackBot.sendMessage(channelName, message);
+    })
     .catch(console.error);
 }
 sendScheduledInspiration();
