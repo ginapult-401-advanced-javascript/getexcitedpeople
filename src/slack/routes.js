@@ -58,6 +58,11 @@ router.post('/inspire-delete', handleInspireDelete);
  * @returns {string} 200 a status code means okay
  */
 router.post('/inspire-admin', handleInspireAdmin);
+
+/**
+ * @route POST /inspire-scheduled
+ * @returns {string} 200 a status code means okay
+ */
 router.post('/inspire-scheduled', handleInspireScheduled);
 
 
@@ -71,7 +76,6 @@ router.post('/inspire-scheduled', handleInspireScheduled);
  * @returns {string} instruction for the app
  */
 function handleInspireHelp(request, response) {
-  // TODO: /slack/inspire-help command
   response.status(200).send(instructions);
 }
 
@@ -165,7 +169,7 @@ function handleInspireScheduled(request, response) {
 
   inspirationLibrary.getAnyInspiration()
     .then(inspiration => {
-      const message = `(${inspiration._id})\n${inspiration.content}`;
+      const message = `Rando inspiration of the moment! (${inspiration._id})\n${inspiration.content}`;
       return slackBot.sendMessage('inspirations', message);
     })
     .catch(console.error);
