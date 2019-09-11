@@ -19,7 +19,7 @@ const inspirationSchema = mongoose.Schema({
 });
 
 // inspirationSchema.pre('save',function(){
-//   display_id = 
+//   display_id =
 // });
 
 inspirationSchema.plugin(autoIncrement.plugin, 'display_id');
