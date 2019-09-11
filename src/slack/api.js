@@ -42,6 +42,13 @@ const postMessageToChannel = (channelId, message) => {
     .set('Authorization', `Bearer ${TOKEN}`);
 };
 
+/**
+ * Sends a message returned from postMessageToChannel as the bot, into selected channel.
+ *
+ * @param {string} channelName - The user-readable channel name - e.g. 'bot-testing'
+ * @param {string} message - The message to send
+ * @returns {Promise}
+ */
 const sendMessage = (channelName, message) => {
   getChannelId(channelName)
     .then(channelId => postMessageToChannel(channelId, message))

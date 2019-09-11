@@ -28,6 +28,10 @@ userSchema.virtual('content', {
   justOne: false,
 });
 
+/**
+ * Hooks up the user schema with the role and inspiration schema by user_id.
+ */
+
 userSchema.pre('findOne', async function(){
   try{
     this.populate('capabilities');
@@ -37,6 +41,14 @@ userSchema.pre('findOne', async function(){
     console.log('there is an error in pre find async function');
   }
 });
+
+/**
+ * Checks slack user ID against db to see if exists.
+ *
+ * @param {string} user_id - User ID
+ * @param {string} query - user query
+ * @returns {user.user_id}
+ */
 
 userSchema.statics.checkSlackId = function(user_id){
   const query = {user_id: user_id};
