@@ -3,13 +3,14 @@
 const express = require('express');
 const router = express.Router();
 
-const contentLibrary = require('../content/inspiration-library.js');
+const slackBot = require('./api.js');
+
+const inspirationLibrary = require('../content/inspiration-library.js');
 
 /** This command is used for local testing with Ngrok and any callback function. */
 router.post('/ngrok', handleInspireMe);
 
-/** These routes are our slack command routes. Slack sends requests after slack commands. */
-
+/** Slack command routes. Slack sends requests after slack commands. */
 router.post('/inspire-help', handleInspireHelp);
 router.post('/inspire-me', handleInspireMe);
 router.post('/inspire-me-more', handleInspireMeMore);
@@ -29,18 +30,35 @@ function handleInspireHelp(request, response) {
 }
 
 /**
+ * TODO: Remove this function once DMs are confirmed through deployment
+ */
+function handleDirectMessageSelf(request, response) {
+  const userId = request.body.user_id;
+  const message = request.body.text;
+  slackBot.postMessageToChannel(userId, message)
+    .then(() => {
+      console.log(`Message sent to User: ${userId}`);
+      response.status(200).send();
+    })
+    .catch(console.error);
+}
+
+/**
  *
  * @param request
  * @param response
  */
 function handleInspireMe(request, response) {
   const userId = request.body.user_id;
-  contentLibrary.getInspiration(userId)
+
+  inspirationLibrary.getInspiration(userId)
     .then(inspiration => {
-      return response.status(200)
-        .send(`(${inspiration._id})\n${inspiration.content}`);
+      const message = `(${inspiration._id})\n${inspiration.content}`;
+      slackBot.postMessageToChannel(userId, message);
     })
     .catch(console.error);
+
+  return response.status(200).send();
 }
 
 /**
@@ -51,7 +69,7 @@ function handleInspireMe(request, response) {
 function handleInspireCreate(request, response) {
   const userId = request.body.user_id;
   const newContent = request.body.text;
-  contentLibrary.createInspiration(userId, newContent)
+  inspirationLibrary.createInspiration(userId, newContent)
     .then(inspiration => {
       return response.status(200)
         .send(`Inspiration ${inspiration._id} saved:\n${inspiration.content}`);
@@ -69,7 +87,7 @@ function handleInspireUpdate(request, response) {
   const spaceIndex = text.indexOf(' ');
   const inspirationId = text.substring(0, spaceIndex);
   const newContent = text.substring(spaceIndex + 1);
-  contentLibrary.updateInspiration(user_id, inspirationId, newContent)
+  inspirationLibrary.updateInspiration(user_id, inspirationId, newContent)
     .then(inspiration => {
       return response.status(200)
         .send(`Inspiration ${inspiration._id} updated:\n${inspiration.content}`);
@@ -85,7 +103,7 @@ function handleInspireUpdate(request, response) {
 function handleInspireDelete(request, response) {
   const userId = request.body.user_id;
   const inspirationId = request.body.text;
-  contentLibrary.deleteInspiration(userId, inspirationId)
+  inspirationLibrary.deleteInspiration(userId, inspirationId)
     .then(inspiration => {
       return response.status(200)
         .send(`Inspiration ${inspiration._id} deleted:\n${inspiration.content}`);
