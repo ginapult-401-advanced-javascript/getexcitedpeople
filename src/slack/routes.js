@@ -6,7 +6,7 @@ const router = express.Router();
 const slackBot = require('./api.js');
 const inspirationLibrary = require('../content/inspiration-library.js');
 
-const instruction = require('../../src/instruction');
+const instructions = require('./instructions.js');
 
 /** This command is used for local testing with Ngrok and any callback function. */
 router.post('/ngrok', handleInspireMe);
@@ -72,28 +72,7 @@ router.post('/inspire-scheduled', handleInspireScheduled);
  */
 function handleInspireHelp(request, response) {
   // TODO: /slack/inspire-help command
-  response.status(200).send(instruction);
-}
-
-/**
- * TODO: Remove this function once DMs are confirmed through deployment
- */
-/**
- *This function is a callback function to send the message directly to *the user
- *
- * @param {object} request
- * @param {string} response
- * @returns {string} code 200 that means okay
- */
-function handleDirectMessageSelf(request, response) {
-  const userId = request.body.user_id;
-  const message = request.body.text;
-  slackBot.postMessageToChannel(userId, message)
-    .then(() => {
-      console.log(`Message sent to User: ${userId}`);
-      response.status(200).send();
-    })
-    .catch(console.error);
+  response.status(200).send(instructions);
 }
 
 /**
