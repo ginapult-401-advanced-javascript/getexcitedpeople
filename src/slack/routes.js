@@ -54,9 +54,10 @@ router.post('/slack/inspire-me-more', (request, response) => {
 router.post('/slack/inspire-create', (request, response) => {
 
   const userId = request.body.user_id;
-  content.create({user_id: userId, content: quote})
+  const newContent = request.body.text;
+  content.create({user_id: userId, content: newContent})
     .then(inspirationObject => {
-      response.status(200).send(`${inspirationObject._id}: ${inspirationObject.content}`);
+      response.status(200).send(`Inspiration ${inspirationObject._id} has been saved!`);
       console.log(inspirationObject);
     })
     .catch(console.error);
