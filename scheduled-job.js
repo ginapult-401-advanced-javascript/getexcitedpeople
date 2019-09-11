@@ -7,9 +7,12 @@ const generateScheduleInspiration = inspirationLibrary.generateScheduleInspirati
 const channelName = 'bot-testing';
 
 function sendScheduledInspiration() {
-    generateScheduleInspiration()
-      .then(inspiration => slackBot.sendMessage(channelName, inspiration))
-      .catch(console.error);
-    console.log('Heroku log: Scheduled inspiration triggered');
+  console.log('Heroku log: Scheduled inspiration triggered');
+  return generateScheduleInspiration()
+    .then(inspiration => {
+      const message = `${inspiration._id} ${inspiration.content}`;
+      slackBot.sendMessage(channelName, message);
+    })
+    .catch(console.error);
 }
 sendScheduledInspiration();
