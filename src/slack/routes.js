@@ -3,115 +3,115 @@
 const express = require('express');
 const router = express.Router();
 
-const slackbot = require('./api.js');
+const contentLibrary = require('../content/inspiration-library.js');
 
+/** This command is used for local testing with Ngrok and any callback function. */
+router.post('/ngrok', handleInspireMe);
 
-const quoteGenerator = require('../quotes/generator.js'); //imports the random content generator functionality
-const userSchema = require('../models/auth/users-model.js'); //imports the userSchema/model 
+/** These routes are our slack command routes. Slack sends requests after slack commands. */
 
-const resourceServer = require('../quotes/generator.js');
+router.post('/inspire-help', handleInspireHelp);
+router.post('/inspire-me', handleInspireMe);
+router.post('/inspire-me-more', handleInspireMeMore);
+router.post('/inspire-create', handleInspireCreate);
+router.post('/inspire-update', handleInspireUpdate);
+router.post('/inspire-delete', handleInspireDelete);
+router.post('/inspire-admin', handleInspireAdmin);
 
-router.post('/slack/ngrok', (request, response) => {
-  response.status(200).send(request.body.channel_id);
-});
-
-router.post('/slack/echo', (request, response) => {
-  const channelName = request.body.channel_name;
-  const userId = request.body.user_id;
-  slackbot.sendMessage(channelName, request.body.text);
-  response.status(200).send();
-});
-
-router.post('/slack/inspire-help', (request, response) => {
-  const channelName = request.body.channel_name;
-
-  try {
-    let query = {user_id: request.user_id};
-    if (this.findOne(query)) {
-      return (this.findOne(query));
-    } else {
-      let newUser = {
-        user_id: request.user_id,
-        user_role: user,
-      };
-      let user = new userSchema(newUser);
-      user.save()
-        .then(user => {
-          response.user = user;
-          return user; 
-          // response.set('role', auth.role);
-        });
-    } 
-  } catch(err) {
-    console.error(`Error ${err}`);
-  }
-  // slackbot.sendMessage(channelName, expectedQuoteObject.text);
-  // slackbot.sendMessage(channelName, expectedQuoteObject.img_url);
-  slackbot.sendMessage(channelName, expectedQuoteObject.song_url);
-  response.status(200).send();
-});
-
-
-router.post('/slack/inspirehelp', (request, response) => {
-  
-});
-
-router.post('/slack/inspirecreate', (request, response) => {
-  quoteGenerator(request.body);
-  response.status(200).send();
-});
-
-router.post('/slack/inspireupdate', (request, response) => {
-  // const text = request.body.text;
-
-=======
-  const userId = request.body.user_id;
+/**
+ *
+ * @param request
+ * @param response
+ */
+function handleInspireHelp(request, response) {
   // TODO: /slack/inspire-help command
-  response.status(200).send('Sending help!');
-});
+  response.status(200).send('(TODO) Sending help!');
+}
 
-router.post('/slack/inspire-me', (request, response) => {
+/**
+ *
+ * @param request
+ * @param response
+ */
+function handleInspireMe(request, response) {
   const userId = request.body.user_id;
-  const inspirationObject = resourceServer.getInspiration(userId);
-  response.status(200).send(`${inspirationObject.content_id}: ${inspirationObject.content}`);
-});
+  contentLibrary.getInspiration(userId)
+    .then(inspiration => {
+      return response.status(200)
+        .send(`(${inspiration._id})\n${inspiration.content}`);
+    })
+    .catch(console.error);
+}
 
-router.post('/slack/inspire-me-more', (request, response) => {
-  const channelName = request.body.channel_name;
-  const userId = request.body.user_id;
-  // TODO: /slack/inspire-me-more command
-  response.status(200).send();
-});
-
-router.post('/slack/inspire-create', (request, response) => {
-  const channelName = request.body.channel_name;
+/**
+ *
+ * @param request
+ * @param response
+ */
+function handleInspireCreate(request, response) {
   const userId = request.body.user_id;
   const newContent = request.body.text;
-  const savedObject = resourceServer.createInspiration(userId, newContent);
-  response.status(200).send(`Inspiration ${savedObject.content_id} has been saved!`);
-});
+  contentLibrary.createInspiration(userId, newContent)
+    .then(inspiration => {
+      return response.status(200)
+        .send(`Inspiration ${inspiration._id} saved:\n${inspiration.content}`);
+    })
+    .catch(console.error);
+}
 
-router.post('/slack/inspire-update', (request, response) => {
-  const channelName = request.body.channel_name;
-  const userId = request.body.user_id;
-  const [inspirationId, newContent] = request.body.text.split(/\s+/);
-  const updatedObject = resourceServer.updateInspiration(userId, inspirationId, newContent);
-  response.status(200).send(`Inspiration ${updatedObject.content_id} updated!`);
-});
+/**
+ *
+ * @param request
+ * @param response
+ */
+function handleInspireUpdate(request, response) {
+  const {user_id, text} = request.body;
+  const spaceIndex = text.indexOf(' ');
+  const inspirationId = text.substring(0, spaceIndex);
+  const newContent = text.substring(spaceIndex + 1);
+  contentLibrary.updateInspiration(user_id, inspirationId, newContent)
+    .then(inspiration => {
+      return response.status(200)
+        .send(`Inspiration ${inspiration._id} updated:\n${inspiration.content}`);
+    })
+    .catch(console.error);
+}
 
-router.post('/slack/inspire-delete', (request, response) => {
-  const channelName = request.body.channel_name;
+/**
+ *
+ * @param request
+ * @param response
+ */
+function handleInspireDelete(request, response) {
   const userId = request.body.user_id;
   const inspirationId = request.body.text;
-  const deletedObject = resourceServer.deleteInspiration(userId, inspirationId);
-  response.status(200).send(`Inspiration ${deletedObject.content_id} deleted.`);
-});
+  contentLibrary.deleteInspiration(userId, inspirationId)
+    .then(inspiration => {
+      return response.status(200)
+        .send(`Inspiration ${inspiration._id} deleted:\n${inspiration.content}`);
+    })
+    .catch(console.error);
+}
 
-router.post('/slack/inspire-admin', (request, response) => {
-  const channelName = request.body.channel_name;
-  const userId = request.body.user_id;
+/**
+ *
+ * @param request
+ * @param response
+ */
+function handleInspireMeMore(request, response) {
+  // TODO: Stretch Goal - /slack/inspire-me-more command
+  response.status(200).send('(TODO) You are more inspired!');
+}
+
+/**
+ *
+ * @param request
+ * @param response
+ */
+function handleInspireAdmin(request, response) {
   // TODO: Stretch Goal - /slack/inspire-admin command
-  response.status(200).send();
-});
+  response.status(200).send('(TODO) Admin command');
+}
+
 
 module.exports = router;

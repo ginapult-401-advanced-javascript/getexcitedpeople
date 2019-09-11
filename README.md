@@ -2,7 +2,7 @@
 ---------------------------------
 ## We are deployed on heroku
 
-[project url here]
+https://get-excited-people.herokuapp.com/
 
 ---------------------------------
 ## Web Application
