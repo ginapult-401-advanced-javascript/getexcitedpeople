@@ -29,6 +29,15 @@ const deleteInspiration = (userId, inspirationId) => {
   return inspiration.delete(inspirationId);
 };
 
+function generateScheduleInspiration() {
+  return inspiration.get()
+    .then(allContent => {
+      const randomIndex = Math.floor(Math.random() * allContent.length);
+      return allContent[randomIndex];
+    })
+    .catch(console.error);
+};
+
 let inspirations = [
   {
     inspiration_id:1,
@@ -174,4 +183,5 @@ module.exports = {
   createInspiration,
   updateInspiration,
   deleteInspiration,
+  generateScheduleInspiration,
 };
