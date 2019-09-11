@@ -1,10 +1,4 @@
 'use strict';
-/**
- Why are these schema paths so different?
- You may want to think about putting your models in a similar path relative to each other.
-*/
-let roleSchema = require('./role'); // TODO: pick a requiring syntax, this file doesn't use .js but the one below does.
-let contentSchema = require('../../content/content-schema.js/index.js');
 
 const mongoose = require('mongoose');
 
@@ -45,32 +39,25 @@ userSchema.pre('findOne', async function(){
 });
 
 userSchema.statics.checkSlackId = function(user_id){
-  try {
-    const query = {user_id: user_id};
-    const user = this.findOne(query); // Is this not asynchronous?
-    if (user) {
-      return user.user_id;
-    } else {
-      const userData = {
-        user_id: user_id,
-        user_role: user,
-      };
-      const newUser = new userSchema(userData);
-      newUser.save()
-        .then(user => {
-          return user.user_id; 
-          // response.set('role', auth.role); - Jacob: this should be removed if it's not being used. You don't want to commit un-used code to master / production.
-        });
-    } 
-  } catch(err) {
-    console.error(`Error ${err}`);
-  }
+  const query = {user_id: user_id};
+  return this.findOne(query)
+    .then (user => {
+      if (user) {
+        return user.user_id;
+      } else {
+        const userData = {
+          user_id: user_id,
+          user_role: user,
+        };
+        const newUser = new userSchema(userData);
+        return newUser.save()
+      }
+    })
+    .then (user => {
+      return user.user_id; 
+      // TODO: Stretch Goal - response.set('role', auth.role)
+    })
+    .catch(console.error);
 };
-
-/**
-  TODO: Remove some of these blank lines.  There's too many.
-*/
-
-
 
 module.exports = mongoose.model('userSchema', userSchema);
