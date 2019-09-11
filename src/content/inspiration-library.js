@@ -16,20 +16,20 @@ const getInspiration = userId => {
 const createInspiration = (userId, newInspiration) => {
   const inspirationObject = {
     user_id: userId,
-    inspiration: newInspiration,
+    content: newInspiration,
   };
   return inspiration.create(inspirationObject);
 };
 
 const updateInspiration = (userId, inspirationId, newInspiration) => {
-  return inspiration.update(inspirationId, {inspiration: newInspiration});
+  return inspiration.update(inspirationId, {content: newInspiration});
 };
 
 const deleteInspiration = (userId, inspirationId) => {
   return inspiration.delete(inspirationId);
 };
 
-function generateScheduleInspiration() {
+const generateScheduleInspiration = () => {
   return inspiration.get()
     .then(allContent => {
       const randomIndex = Math.floor(Math.random() * allContent.length);
