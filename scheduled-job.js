@@ -1,19 +1,10 @@
 'use strict';
 
 const slackBot = require('./src/slack/api.js');
-const Inspiration = require('./src/models/inspiration/inspiration.js');
-const inspiration = new Inspiration();
+const inspirationLibrary = require('./src/content/inspiration-library.js');
+const generateScheduleInspiration = inspirationLibrary.generateScheduleInspiration;
 
 const channelName = 'bot-testing';
-
-function generateScheduleInspiration() {
-    return inspiration.get()
-      .then(allContent => {
-        const randomIndex = Math.floor(Math.random() * allContent.length);
-        return allContent[randomIndex];
-      })
-      .catch(console.error);
-};
 
 function sendScheduledInspiration() {
     generateScheduleInspiration()
