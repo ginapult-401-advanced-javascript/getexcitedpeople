@@ -15,21 +15,13 @@ const schema = require('../models/content/content-schema.js');
 const content = new Content(schema);
 
 router.post('/slack/ngrok', (request, response) => {
-  const userId = request.body.user_id;
-  const newContent = request.body.text;
-  content.create({user_id: userId, content: newContent})
-    .then(inspirationObject => {
-      response.status(200).send(`${inspirationObject._id}: ${inspirationObject.content}\nNewLine`);
-      console.log(inspirationObject);
-    })
-    .catch(console.error);
+  const message = request.body.text;
+  response.status(200).send(message);
 });
 
 router.post('/slack/echo', (request, response) => {
-  const channelName = request.body.channel_name;
-  const userId = request.body.user_id;
-  slackbot.sendMessage(channelName, request.body.text);
-  response.status(200).send();
+  const message = request.body.text;
+  response.status(200).send(message);
 });
 
 router.post('/slack/inspire-help', (request, response) => {
