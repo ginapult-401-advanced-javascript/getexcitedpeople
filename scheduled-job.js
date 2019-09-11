@@ -2,17 +2,16 @@
 
 const slackBot = require('./src/slack/api.js');
 const inspirationLibrary = require('./src/content/inspiration-library.js');
+const superagent = require('superagent');
 
 const channelName = 'inspirations';
 
 function sendScheduledInspiration() {
-  console.log('Heroku log: Scheduled inspiration triggered');
-  return inspirationLibrary.generateScheduleInspiration()
-    .then(inspiration => {
-      const message = `${inspiration._id} ${inspiration.content}`;
-      console.log('Forwarding to bot');
-      return slackBot.sendMessage(channelName, message);
+  return superagent.post('https://get-excited-people.herokuapp.com/slack/inspire-scheduled')
+    .then (response => {
+      console.log(response.status);
     })
     .catch(console.error);
 }
+
 sendScheduledInspiration();
