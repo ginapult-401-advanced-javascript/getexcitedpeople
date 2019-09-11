@@ -42,5 +42,8 @@
     "superagent": "^5.1.0",
     "supertest": "^4.0.2",
     "util": "^0.12.1"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.6.3"
   }
 }
