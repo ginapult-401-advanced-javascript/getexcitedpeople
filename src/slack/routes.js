@@ -10,7 +10,17 @@ const inspirationLibrary = require('../content/inspiration-library.js');
 router.post('/ngrok', handleInspireMe);
 
 /** Slack command routes. Slack sends requests after slack commands. */
+
+/**
+ * @route POST /inspire-help
+ * @returns {object} returns instruction for the app
+ */
 router.post('/inspire-help', handleInspireHelp);
+
+/**
+ * @route POST /inspire-me
+ * @returns {object} returns instruction for the app
+ */
 router.post('/inspire-me', handleInspireMe);
 router.post('/inspire-me-more', handleInspireMeMore);
 router.post('/inspire-create', handleInspireCreate);
@@ -18,11 +28,7 @@ router.post('/inspire-update', handleInspireUpdate);
 router.post('/inspire-delete', handleInspireDelete);
 router.post('/inspire-admin', handleInspireAdmin);
 
-/**
- *
- * @param request
- * @param response
- */
+
 function handleInspireHelp(request, response) {
   // TODO: /slack/inspire-help command
   response.status(200).send('(TODO) Sending help!');
@@ -43,9 +49,10 @@ function handleDirectMessageSelf(request, response) {
 }
 
 /**
- *
+ *This function takes user_id from request and then send inspiration content and its id to the slackBot
+ * 
  * @param request
- * @param response
+ * @param response 
  */
 function handleInspireMe(request, response) {
   const userId = request.body.user_id;
