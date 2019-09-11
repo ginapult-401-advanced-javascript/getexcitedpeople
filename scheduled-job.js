@@ -1,6 +1,8 @@
 'use strict';
 
 const slackBot = require('./src/slack/api.js');
+const Inspiration = require('./src/models/inspiration/inspiration.js');
+const inspiration = new Inspiration();
 
 const channelName = 'bot-testing';
 
