@@ -4,7 +4,6 @@ const express = require('express');
 const router = express.Router();
 
 const slackBot = require('./api.js');
-
 const inspirationLibrary = require('../content/inspiration-library.js');
 
 /** This command is used for local testing with Ngrok and any callback function. */
