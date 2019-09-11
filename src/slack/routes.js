@@ -27,6 +27,7 @@ router.post('/inspire-create', handleInspireCreate);
 router.post('/inspire-update', handleInspireUpdate);
 router.post('/inspire-delete', handleInspireDelete);
 router.post('/inspire-admin', handleInspireAdmin);
+router.post('/inspire-scheduled', handleInspireScheduled);
 
 
 function handleInspireHelp(request, response) {
@@ -115,6 +116,24 @@ function handleInspireDelete(request, response) {
         .send(`Inspiration ${inspiration._id} deleted:\n${inspiration.content}`);
     })
     .catch(console.error);
+}
+
+/**
+ *This function takes sends a random inspiration to the inspirations channel
+ * 
+ * @param request
+ * @param response 
+ */
+function handleInspireScheduled(request, response) {
+
+  inspirationLibrary.getAnyInspiration()
+    .then(inspiration => {
+      const message = `(${inspiration._id})\n${inspiration.content}`;
+      return slackBot.sendMessage('inspirations', message);
+    })
+    .catch(console.error);
+
+  return response.status(200).send();
 }
 
 /**
