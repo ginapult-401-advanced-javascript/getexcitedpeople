@@ -11,7 +11,8 @@
     "lint": "eslint \"**/*.js\"",
     "test": "jest --verbose --coverage",
     "test-watch": "jest --watchAll --verbose --coverage",
-    "jsdoc": "jsdoc -c ./docs/config/jsdoc.config.json"
+    "jsdoc": "jsdoc -c ./docs/config/jsdoc.config.json",
+    "startDB": "mkdir -p ./.db && mongod --dbpath=./.db"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,7 @@
     "mongoose-schema-jsonschema": "^1.2.1",
     "morgan": "^1.9.1",
     "superagent": "^5.1.0",
+    "supertest": "^4.0.2",
     "util": "^0.12.1"
   }
 }
