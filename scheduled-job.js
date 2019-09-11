@@ -12,7 +12,7 @@ function sendScheduledInspiration() {
     .then(inspiration => {
       const message = `${inspiration._id} ${inspiration.content}`;
       console.log('Forwarding to bot');
-      slackBot.sendMessage(channelName, message);
+      return slackBot.sendMessage(channelName, message);
     })
     .catch(console.error);
 }
