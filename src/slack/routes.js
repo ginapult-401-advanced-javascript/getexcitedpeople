@@ -5,13 +5,23 @@ const router = express.Router();
 
 const slackbot = require('./api.js');
 
-const resourceServer = require('../models/content/content-schema');
+const resourceServer = require('../models/content/content-model.js');
+// const resourceServer = require('../models/content/content-schema');
 
+let quote = 'Do one thing every day that scares you';
+
+const Content = require('../models/content/content-model.js');
+const schema = require('../models/content/content-schema.js');
+const content = new Content(schema);
 
 router.post('/slack/ngrok', (request, response) => {
   const userId = request.body.user_id;
-  const inspirationObject = resourceServer.getInspiration(userId);
-  response.status(200).send(`${inspirationObject.content_id}: ${inspirationObject.content}`);
+  content.create({user_id: userId, content: quote})
+    .then(inspirationObject => {
+      response.status(200).send(`${inspirationObject._id}: ${inspirationObject.content}`);
+      console.log(inspirationObject);
+    })
+    .catch(console.error);
 });
 
 router.post('/slack/echo', (request, response) => {
@@ -42,11 +52,24 @@ router.post('/slack/inspire-me-more', (request, response) => {
 });
 
 router.post('/slack/inspire-create', (request, response) => {
+
+  const userId = request.body.user_id;
+  content.create({user_id: userId, content: quote})
+    .then(inspirationObject => {
+      response.status(200).send(`Inspiration ${inspirationObject._id} has been saved!`);
+      console.log(inspirationObject);
+    })
+    .catch(console.error);
+
+  
+/*
   const channelName = request.body.channel_name;
   const userId = request.body.user_id;
   const newContent = request.body.text;
   const savedObject = resourceServer.createInspiration(userId, newContent);
   response.status(200).send(`Inspiration ${savedObject.content_id} has been saved!`);
+*/
+
 });
 
 router.post('/slack/inspire-update', (request, response) => {
