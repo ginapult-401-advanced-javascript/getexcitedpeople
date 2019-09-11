@@ -53,7 +53,7 @@ function handleInspireMe(request, response) {
   inspirationLibrary.getInspiration(userId)
     .then(inspiration => {
       const message = `(${inspiration._id})\n${inspiration.content}`;
-      slackBot.postMessageToChannel(userId, message);
+      return slackBot.postMessageToChannel(userId, message);
     })
     .catch(console.error);
 
