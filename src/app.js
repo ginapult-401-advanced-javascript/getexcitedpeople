@@ -16,7 +16,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-app.use(slackRoutes); 
+app.use('/slack', slackRoutes); 
 
 //error handling middlware
 const errorHandler = require( './middleware/error.js');
