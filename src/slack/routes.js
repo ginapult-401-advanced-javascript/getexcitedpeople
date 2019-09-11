@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
-const contentLibrary = require('../content/inspiration-library.js');
+const inspirationLibrary = require('../content/inspiration-library.js');
 
 /** This command is used for local testing with Ngrok and any callback function. */
 router.post('/ngrok', handleInspireMe);
@@ -35,7 +35,7 @@ function handleInspireHelp(request, response) {
  */
 function handleInspireMe(request, response) {
   const userId = request.body.user_id;
-  contentLibrary.getInspiration(userId)
+  inspirationLibrary.getInspiration(userId)
     .then(inspiration => {
       return response.status(200)
         .send(`(${inspiration._id})\n${inspiration.content}`);
@@ -51,7 +51,7 @@ function handleInspireMe(request, response) {
 function handleInspireCreate(request, response) {
   const userId = request.body.user_id;
   const newContent = request.body.text;
-  contentLibrary.createInspiration(userId, newContent)
+  inspirationLibrary.createInspiration(userId, newContent)
     .then(inspiration => {
       return response.status(200)
         .send(`Inspiration ${inspiration._id} saved:\n${inspiration.content}`);
@@ -69,7 +69,7 @@ function handleInspireUpdate(request, response) {
   const spaceIndex = text.indexOf(' ');
   const inspirationId = text.substring(0, spaceIndex);
   const newContent = text.substring(spaceIndex + 1);
-  contentLibrary.updateInspiration(user_id, inspirationId, newContent)
+  inspirationLibrary.updateInspiration(user_id, inspirationId, newContent)
     .then(inspiration => {
       return response.status(200)
         .send(`Inspiration ${inspiration._id} updated:\n${inspiration.content}`);
@@ -85,7 +85,7 @@ function handleInspireUpdate(request, response) {
 function handleInspireDelete(request, response) {
   const userId = request.body.user_id;
   const inspirationId = request.body.text;
-  contentLibrary.deleteInspiration(userId, inspirationId)
+  inspirationLibrary.deleteInspiration(userId, inspirationId)
     .then(inspiration => {
       return response.status(200)
         .send(`Inspiration ${inspiration._id} deleted:\n${inspiration.content}`);
