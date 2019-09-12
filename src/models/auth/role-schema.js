@@ -2,13 +2,19 @@
 
 const mongoose = require('mongoose');
 
+<<<<<<< HEAD
 /**
  * role constructor for our eventual addition of admin functionality 
  */
+=======
+
+/*
+>>>>>>> ah-ll-tests
 const capabilities = {
   admin: ['create', 'read', 'update', 'delete'],
   user: ['read', 'deleteLocal', 'updateLocal', 'createLocal'],
 };
+*/
 
 /**
  * role capabilities

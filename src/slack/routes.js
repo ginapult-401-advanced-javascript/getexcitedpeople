@@ -22,7 +22,7 @@ router.post('/inspire-help', handleInspireHelp);
 /**
  * @route POST /inspire-me
  * @returns {string} 200 a status code means okay
- * @returns {object} user_id and message 
+ * @returns {object} user_id and message
  */
 router.post('/inspire-me', handleInspireMe);
 
@@ -49,7 +49,7 @@ router.post('/inspire-update', handleInspireUpdate);
 /**
  * @route POST /inspire-delete
  * @returns {string} 200 a status code means okay
- * @returns {object} id and the content of the deleted data 
+ * @returns {object} id and the content of the deleted data
  */
 router.post('/inspire-delete', handleInspireDelete);
 
@@ -81,34 +81,34 @@ function handleInspireHelp(request, response) {
 
 /**
  *This function takes user_id from request and then send inspiration content and its id to the slackBot
- * 
+ *
  * @param {object} request
- * @param {string} response 
+ * @param {string} response
  * @returns {string} code 200 that means okay
  * @returns {object} user id and a message
  */
-function handleInspireMe(request, response) {
+function handleInspireMe(request, response, next) {
   const userId = request.body.user_id;
 
   inspirationLibrary.getInspiration(userId)
     .then(inspiration => {
       const message = `(${inspiration._id})\n${inspiration.content}`;
-      return slackBot.sendMessage('inspirations', message);
+      slackBot.sendMessage('inspirations', message);
+      response.status(200).send();
     })
-    .catch(console.error);
+    .catch(next);
 
-  return response.status(200).send();
 }
 
 /**
- *This function takes in user_id from request and then create new *content and save it to the database 
- * 
+ *This function takes in user_id from request and then create new *content and save it to the database
+ *
  * @param {object} request
- * @param {string} response 
+ * @param {string} response
  * @returns {string} code 200 that means okay
  * @returns {object} inspiration id and the saved content
  */
-function handleInspireCreate(request, response) {
+function handleInspireCreate(request, response, next) {
   const userId = request.body.user_id;
   const newContent = request.body.text;
   inspirationLibrary.createInspiration(userId, newContent)
@@ -116,18 +116,18 @@ function handleInspireCreate(request, response) {
       return response.status(200)
         .send(`Inspiration ${inspiration._id} saved:\n${inspiration.content}`);
     })
-    .catch(console.error);
+    .catch(next);
 }
 
 /**
  *This function takes in user_id, inspirationId and a text, then update the content of the content with the inspirationId in the database
- * 
+ *
  * @param {object} request
- * @param {string} response 
+ * @param {string} response
  * @returns {string} code 200 that means okay
  * @returns {object} inspirationId and updated content
  */
-function handleInspireUpdate(request, response) {
+function handleInspireUpdate(request, response, next) {
   const {user_id, text} = request.body;
   const spaceIndex = text.indexOf(' ');
   const inspirationId = text.substring(0, spaceIndex);
@@ -137,33 +137,33 @@ function handleInspireUpdate(request, response) {
       return response.status(200)
         .send(`Inspiration ${inspiration._id} updated:\n${inspiration.content}`);
     })
-    .catch(console.error);
+    .catch(next);
 }
 
 /**
  *This function takes in user id and inspirationId and then delete the *content with the inspirationId and return the deleted content and its id
- * 
+ *
  * @param {object} request
- * @param {string} response 
+ * @param {string} response
  * @returns {string} code 200 that means okay
  * @returns {object} user id and a message
  */
-function handleInspireDelete(request, response) {
+function handleInspireDelete(request, response, next) {
   const userId = request.body.user_id;
   const inspirationId = request.body.text;
   inspirationLibrary.deleteInspiration(userId, inspirationId)
     .then(inspiration => {
       return response.status(200)
-        .send(`Inspiration ${inspiration._id} deleted:\n${inspiration.content}`);
+        .send(`Inspiration deleted:\n${inspiration.content}`);
     })
-    .catch(console.error);
+    .catch(next);
 }
 
 /**
  *This function takes sends a random inspiration to the inspirations channel
- * 
+ *
  * @param request
- * @param response 
+ * @param response
  */
 function handleInspireScheduled(request, response) {
 
@@ -179,9 +179,9 @@ function handleInspireScheduled(request, response) {
 
 /**
  *
- * 
+ *
  * @param {object} request
- * @param {string} response 
+ * @param {string} response
  * @returns {string} code 200 that means okay
  */
 function handleInspireMeMore(request, response) {
@@ -192,7 +192,7 @@ function handleInspireMeMore(request, response) {
 /**
  *
  * @param {object} request
- * @param {string} response 
+ * @param {string} response
  * @returns {string} code 200 that means okay
  */
 function handleInspireAdmin(request, response) {

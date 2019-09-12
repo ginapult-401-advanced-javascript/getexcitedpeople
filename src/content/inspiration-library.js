@@ -4,10 +4,10 @@ const Inspiration = require('../models/inspiration/inspiration.js');
 const inspiration = new Inspiration();
 
 /**
- * 
- * @param {*} userId -- takes in the Slack user id
+ *
+ * @param {string} userId -- takes in the Slack user id
  * pulls in all of the inspiration content from db, returns it to be filtered for a random one (1)
- * 
+ *
  */
 const getInspiration = userId => {
   return inspiration.get()
@@ -20,10 +20,10 @@ const getInspiration = userId => {
 };
 
 /**
- * 
- * @param {*} userId -- takes in the Slack user id
- * @param {*} newInspiration -- goes to our inspiration model and 'saves' to our inspiration db 
- * 
+ *
+ * @param {string} userId -- takes in the Slack user id
+ * @param {object} newInspiration -- goes to our inspiration model and 'saves' to our inspiration db
+ *
  */
 const createInspiration = (userId, newInspiration) => {
   const inspirationObject = {
@@ -34,27 +34,44 @@ const createInspiration = (userId, newInspiration) => {
 };
 
 /**
- * 
- * @param {*} userId -- takes in the Slack user id 
- * @param {*} inspirationId -- the db identification number 
- * @param {*} newInspiration -- returns the new and updated content for your previously created new inspiration
- * 
+ *
+ * @param {string} userId -- takes in the Slack user id
+ * @param {object} inspirationId -- the db identification number
+ * @param {object} newInspiration -- updated inspiration content
+ *
  */
 const updateInspiration = (userId, inspirationId, newInspiration) => {
-  return inspiration.update(inspirationId, {content: newInspiration});
+  return inspiration.get(inspirationId)
+    .then(results =>{
+      const ownerId = results[0].user_id;
+      if(userId === ownerId) {
+        return inspiration.update(inspirationId, {content: newInspiration});
+      }else{
+        throw Error('Permission denied');
+      }
+    });
 };
 
 /**
  * 
- * @param {*} userId -- takes in slack user id 
- * @param {*} inspirationId -- deletes inputted user content
+ * @param {string} userId -- takes in slack user id
+ * @param {string} inspirationId -- id of the inspiration object from mongo
+ * deletes selected inspirationId
  */
 const deleteInspiration = (userId, inspirationId) => {
-  return inspiration.delete(inspirationId);
+  return inspiration.get(inspirationId)
+    .then(results =>{
+      const ownerId = results[0].user_id;
+      if(userId === ownerId) {
+        return inspiration.delete(inspirationId);
+      }else{
+        throw Error('Permission denied');
+      }
+    });
 };
 
 /**
- * generates a random inspriation content to be thrown during the scheduled inspration pops, or when /inspire_me is called
+ * generates and then returns a random inspriation object from the db
  */
 const getAnyInspiration = () => {
   return inspiration.get()
@@ -70,5 +87,5 @@ module.exports = {
   createInspiration,
   updateInspiration,
   deleteInspiration,
-  getAnyInspiration
+  getAnyInspiration,
 };

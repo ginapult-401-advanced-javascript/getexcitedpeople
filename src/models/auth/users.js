@@ -62,7 +62,7 @@ userSchema.statics.checkSlackId = function(user_id){
           user_role: user,
         };
         const newUser = new userSchema(userData);
-        return newUser.save()
+        return newUser.save();
       }
     })
     .then (user => {
