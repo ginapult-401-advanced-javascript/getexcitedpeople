@@ -6,6 +6,7 @@ const superagent = require('superagent');
 
 const channelName = 'inspirations';
 
+
 function sendScheduledInspiration() {
   return superagent.post('https://get-excited-people.herokuapp.com/slack/inspire-scheduled')
     .then (response => {

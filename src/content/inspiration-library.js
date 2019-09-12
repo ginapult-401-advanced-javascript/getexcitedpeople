@@ -37,17 +37,25 @@ const createInspiration = (userId, newInspiration) => {
  * 
  * @param {*} userId -- takes in the Slack user id 
  * @param {*} inspirationId -- the db identification number 
- * @param {*} newInspiration -- 
+ * @param {*} newInspiration -- returns the new and updated content for your previously created new inspiration
  * 
  */
 const updateInspiration = (userId, inspirationId, newInspiration) => {
   return inspiration.update(inspirationId, {content: newInspiration});
 };
 
+/**
+ * 
+ * @param {*} userId -- takes in slack user id 
+ * @param {*} inspirationId -- deletes inputted user content
+ */
 const deleteInspiration = (userId, inspirationId) => {
   return inspiration.delete(inspirationId);
 };
 
+/**
+ * generates a random inspriation content to be thrown during the scheduled inspration pops, or when /inspire_me is called
+ */
 const getAnyInspiration = () => {
   return inspiration.get()
     .then(allInspiration => {
