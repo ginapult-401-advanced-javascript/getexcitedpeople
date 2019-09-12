@@ -78,5 +78,5 @@ module.exports = {
   createInspiration,
   updateInspiration,
   deleteInspiration,
-  getAnyInspiration
+  getAnyInspiration,
 };
