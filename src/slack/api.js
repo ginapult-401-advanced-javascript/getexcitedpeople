@@ -23,7 +23,9 @@ const getChannelId = channelName => {
 
       const channels = response.body.channels;
       const target = channels.filter(channel => channel.name === channelName)[0];
-
+      if(!target){
+        throw Error('channel unknown');
+      }
       return target.id;
     });
 };
@@ -50,9 +52,9 @@ const postMessageToChannel = (channelId, message) => {
  * @returns {Promise}
  */
 const sendMessage = (channelName, message) => {
-  getChannelId(channelName)
+  return getChannelId(channelName)
     .then(channelId => postMessageToChannel(channelId, message))
     .catch(console.error);
 };
 
-module.exports = {sendMessage, postMessageToChannel};
+module.exports = {getChannelId, sendMessage, postMessageToChannel};

@@ -9,14 +9,20 @@ const mockRequest = supertest(app);
 
 const TOKEN = process.env.ACCESS_TOKEN;
 
-const CONVERSATIONS_LIST_URL = `https://slack.com/api/conversations.list?token=${TOKEN}`;
-const CHAT_POST_MESSAGE_URL = `https://slack.com/api/chat.postMessage`;
-
 
 describe('Testing Slack API Requests', () => {
 
-  test('', () => {
-    //
+  test('successfully get a channel id by given the channel name', () => {
+    return slackbot.getChannelId('inspirations')
+      .then(id=>{
+        expect(id).toEqual('CNB46Q7CP');
+      });
   });
 
+  test('fail get a channel id by given the non-existent channel name', () => {
+    return slackbot.getChannelId('hello')
+      .catch(err=>{
+        expect(err).toBeDefined();
+      });
+  });
 });
