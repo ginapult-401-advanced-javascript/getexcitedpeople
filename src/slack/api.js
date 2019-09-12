@@ -23,9 +23,11 @@ const getChannelId = channelName => {
 
       const channels = response.body.channels;
       const target = channels.filter(channel => channel.name === channelName)[0];
+
       if(!target){
         throw Error('channel unknown');
       }
+
       return target.id;
     });
 };

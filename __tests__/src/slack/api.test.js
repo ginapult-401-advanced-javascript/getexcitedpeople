@@ -1,6 +1,11 @@
 'use strict';
 
+const supertest = require('supertest');
+
+const app = require('../../../src/app.js').server;
 const slackbot = require('../../../src/slack/api.js');
+
+supertest(app);
 
 describe('Testing Slack API Requests', () => {
 
