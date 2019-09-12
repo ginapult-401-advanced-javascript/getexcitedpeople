@@ -42,8 +42,8 @@ const createInspiration = (userId, newInspiration) => {
  */
 const updateInspiration = (userId, inspirationId, newInspiration) => {
   return inspiration.get(inspirationId)
-    .then(inspiration =>{
-      const ownerId = inspiration[0].user_id;
+    .then(results =>{
+      const ownerId = results[0].user_id;
       if(userId === ownerId) {
         return inspiration.update(inspirationId, {content: newInspiration});
       }else{
@@ -54,8 +54,8 @@ const updateInspiration = (userId, inspirationId, newInspiration) => {
 
 const deleteInspiration = (userId, inspirationId) => {
   return inspiration.get(inspirationId)
-    .then(inspiration =>{
-      const ownerId = inspiration[0].user_id;
+    .then(results =>{
+      const ownerId = results[0].user_id;
       if(userId === ownerId) {
         return inspiration.delete(inspirationId);
       }else{
