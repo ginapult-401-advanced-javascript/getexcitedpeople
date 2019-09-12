@@ -36,7 +36,7 @@ describe('Slack Routes', () => {
       .post('/slack/inspire-create')
       .send({user_id: testUserId, text: testContent})
       .then(response => {
-        const responseTokens = response.text.split(/\s+/)
+        const responseTokens = response.text.split(/\s+/);
         inspirationId = responseTokens[1];
         const responseInspiration = responseTokens[responseTokens.length-1];
         expect(inspirationId).toBeDefined();
@@ -52,6 +52,9 @@ describe('Slack Routes', () => {
       .send({ user_id: testUserId })
       .then(response => {
         console.log(response.text);
+        const responseTokens = response.text.split(/\s+/);
+        const respondId = responseTokens[0];
+        expect(respondId).toEqual(`(${inspirationId})`);
         expect(response.statusCode).toEqual(200);
       });
   });
