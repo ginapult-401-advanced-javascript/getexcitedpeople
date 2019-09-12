@@ -10,7 +10,7 @@ class Model {
   }
   /**
    * JSON Schema
-   * @returns {*}
+   * @returns {schema}
    */
   jsonSchema() {
     console.log(typeof this.schema.jsonSchema);
@@ -21,7 +21,7 @@ class Model {
   /**
    * Retrieves one or more records
    * @param _id {string} optional mongo record id
-   * @returns {*}
+   * @returns {object}
    */
   get(_id) {
     let queryObject = _id ? { _id } : {};
@@ -30,7 +30,7 @@ class Model {
   /**
    * Create a new record
    * @param record {object} matches the format of the schema
-   * @returns {*}
+   * @returns {object}
    */
   create(record) {
     console.log('r',record);
@@ -42,11 +42,12 @@ class Model {
    * Replaces a record in the database
    * @param _id {string} Mongo Record ID
    * @param record {object} The record data to replace. ID is a required field
-   * @returns {*}
+   * @returns {object}
    */
   update(_id, record) {
     return this.schema.findByIdAndUpdate(_id, record, { new: true });
   }
+  //TODO: determine the return on this f()
   /**
    * Deletes a recod in the model
    * @param _id {string} Mongo Record ID
