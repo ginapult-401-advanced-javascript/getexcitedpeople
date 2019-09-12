@@ -17,8 +17,9 @@ const testUserId = 'U29283754';
 const testContent = 'my-inspiring-quote';
 const updatedContent = 'you-are-doing-great';
 
+let inspirationId;
+
 describe('Slack Routes', () => {
-  let inspirationId;
 
   test('/slack/inspire-help endpoint should respond with status 200', () => {
 
