@@ -10,6 +10,6 @@ Enter the "/inspire_update" command into the text area followed by a space and t
 (example: /inspire_update 5d796e03a773690017333032 Keep going! You are the best!)
 
 Enter the "/inspire_delete" command into the text area followed by a space and the id of the content that you want to delete from your library. 
-(example: /inspire_delete 5d796e03a773690017333032)`
+(example: /inspire_delete 5d796e03a773690017333032)`;
 
 module.exports = instructions;
