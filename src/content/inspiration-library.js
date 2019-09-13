@@ -5,7 +5,7 @@ const inspiration = new Inspiration();
 
 /**
  *
- * @param {*} userId -- takes in the Slack user id
+ * @param {string} userId -- takes in the Slack user id
  * pulls in all of the inspiration content from db, returns it to be filtered for a random one (1)
  *
  */
@@ -21,8 +21,8 @@ const getInspiration = userId => {
 
 /**
  *
- * @param {*} userId -- takes in the Slack user id
- * @param {*} newInspiration -- goes to our inspiration model and 'saves' to our inspiration db
+ * @param {string} userId -- takes in the Slack user id
+ * @param {object} newInspiration -- goes to our inspiration model and 'saves' to our inspiration db
  *
  */
 const createInspiration = (userId, newInspiration) => {
@@ -35,9 +35,9 @@ const createInspiration = (userId, newInspiration) => {
 
 /**
  *
- * @param {*} userId -- takes in the Slack user id
- * @param {*} inspirationId -- the db identification number
- * @param {*} newInspiration --
+ * @param {string} userId -- takes in the Slack user id
+ * @param {object} inspirationId -- the db identification number
+ * @param {object} newInspiration -- updated inspiration content
  *
  */
 const updateInspiration = (userId, inspirationId, newInspiration) => {
@@ -52,6 +52,12 @@ const updateInspiration = (userId, inspirationId, newInspiration) => {
     });
 };
 
+/**
+ * 
+ * @param {string} userId -- takes in slack user id
+ * @param {string} inspirationId -- id of the inspiration object from mongo
+ * deletes selected inspirationId
+ */
 const deleteInspiration = (userId, inspirationId) => {
   return inspiration.get(inspirationId)
     .then(results =>{
@@ -64,6 +70,9 @@ const deleteInspiration = (userId, inspirationId) => {
     });
 };
 
+/**
+ * generates and then returns a random inspriation object from the db
+ */
 const getAnyInspiration = () => {
   return inspiration.get()
     .then(allInspiration => {

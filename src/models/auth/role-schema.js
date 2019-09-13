@@ -10,6 +10,9 @@ const capabilities = {
 };
 */
 
+/**
+ * role capabilities
+ */
 const roleSchema = mongoose.Schema({
   role: { type: String, required: true }, 
   capabilities: { type: Array, required: true }, 
