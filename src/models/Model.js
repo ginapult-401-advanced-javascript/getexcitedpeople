@@ -13,7 +13,6 @@ class Model {
    * @returns {schema}
    */
   jsonSchema() {
-    console.log(typeof this.schema.jsonSchema);
     return typeof this.schema.jsonSchema === 'function'
       ? this.schema.jsonSchema()
       : {};
@@ -33,9 +32,7 @@ class Model {
    * @returns {object}
    */
   create(record) {
-    console.log('r',record);
     let newRecord = new this.schema(record);
-    console.log('n', newRecord);
     return newRecord.save();
   }
   /**
