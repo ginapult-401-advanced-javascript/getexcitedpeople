@@ -5,7 +5,7 @@ const inspiration = new Inspiration();
 
 /**
  *
- * @param {*} userId -- takes in the Slack user id
+ * @param {String} userId -- takes in the Slack user id
  * pulls in all of the inspiration content from db, returns it to be filtered for a random one (1)
  *
  */
