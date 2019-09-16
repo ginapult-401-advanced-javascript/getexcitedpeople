@@ -1,4 +1,7 @@
 'use strict';
+/**
+ * @module
+ */
 
 const Inspiration = require('../models/inspiration/inspiration.js');
 const inspiration = new Inspiration();

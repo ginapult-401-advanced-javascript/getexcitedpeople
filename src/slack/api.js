@@ -1,4 +1,7 @@
 'use strict';
+/**
+ * @module
+ */
 
 const superagent = require('superagent');
 
