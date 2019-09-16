@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: src/app.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,64 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: src/app.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
 
+require('dotenv').config();
 
-    <h3> </h3>
+//3rd party resources
+const express = require('express');
+const cors = require('cors');
+const morgan = require('morgan');
 
+// Error handling middleware
+const errorHandler = require( './middleware/error.js');
+const notFound = require( './middleware/404.js' );
 
+// Slack command routing
+const slackRoutes = require('./slack/routes.js');
 
+//prepare the express app
+const app = express();
 
+app.use(cors());
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
+// Static Routes
+app.use('/docs', express.static('docs'));
 
+// Routes
+app.use('/slack', slackRoutes); 
 
+// Catchalls
+app.use(notFound);
+app.use(errorHandler);
 
-
-
-    
-
-
-
-
-
+//exporting server and start
+module.exports = {
+  server: app,
+  /** start server on specified port
+   * @param port {number} (defaults to process.env.PORT)
+   */
+  start: (port) => {
+    app.listen(port, () => {
+      console.log(`Server is running on ${port}`);
+    });
+  },
+};
+</code></pre>
+        </article>
+    </section>
 
 
 
