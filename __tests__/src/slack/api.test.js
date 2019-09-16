@@ -12,7 +12,7 @@ describe('Testing Slack API Requests', () => {
   test('successfully get a channel id by given the channel name', () => {
     return slackbot.getChannelId('inspirations')
       .then(id=>{
-        expect(id).toEqual('CNB46Q7CP');
+        expect(id).toEqual('CN55KD6Q1');
       });
   });
 

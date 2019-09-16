@@ -5,11 +5,12 @@ const supergoose = require('../../supergoose.js');
 
 const mockRequest = supergoose.server(server);
 
+// So server error logs don't output to the console during testing
+console.log = jest.fn();
+
 slackbot.sendMessage = jest.fn();
 
-beforeAll(() => {
-  return supergoose.startDB();
-});
+beforeAll(supergoose.startDB);
 
 afterAll(supergoose.stopDB);
 
@@ -59,17 +60,6 @@ describe('Slack Routes', () => {
       });
   });
 
-  test('/slack/inspire-me-more endpoint should respond with status 200', () => {
-
-    return mockRequest
-      .post('/slack/inspire-me-more')
-      .send({ testUserId })
-      .then(response => {
-        // TODO: Stretch Goal - Test /slack/inspire-me-more command
-        expect(response.statusCode).toEqual(200);
-      });
-  });
-
   test('/slack/inspire-update endpoint should respond with status 200', () => {
 
     return mockRequest
@@ -94,17 +84,6 @@ describe('Slack Routes', () => {
         const responseTokens = response.text.split(/\s+/);
         const responseInspiration = responseTokens[responseTokens.length-1];
         expect(responseInspiration).toEqual(updatedContent);
-        expect(response.statusCode).toEqual(200);
-      });
-  });
-
-  test('/slack/inspire-admin endpoint should respond with status 200', () => {
-
-    return mockRequest
-      .post('/slack/inspire-admin')
-      .send({ testUserId })
-      .then(response => {
-        // TODO: Stretch Goal - Test /slack/inspire-admin command
         expect(response.statusCode).toEqual(200);
       });
   });
