@@ -24,7 +24,8 @@ can choose to opt-out of these features for privacy or data collection concerns.
 ---------------------------------
 
 ## Tools Used
-Microsoft Visual Studio
+Visual Studio Code
+JetBrains WebStorm
 
 - NodeJS
 - Express 
