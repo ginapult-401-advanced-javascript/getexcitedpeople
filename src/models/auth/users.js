@@ -66,8 +66,7 @@ userSchema.statics.checkSlackId = function(user_id){
       }
     })
     .then (user => {
-      return user.user_id; 
-      // TODO: Stretch Goal - response.set('role', auth.role)
+      return user.user_id;
     })
     .catch(console.error);
 };

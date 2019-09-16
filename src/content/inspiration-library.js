@@ -4,10 +4,10 @@ const Inspiration = require('../models/inspiration/inspiration.js');
 const inspiration = new Inspiration();
 
 /**
+ * Retrieves a random inspiration from the given user's inspiration library.
  *
- * @param {string} userId -- takes in the Slack user id
- * pulls in all of the inspiration content from db, returns it to be filtered for a random one (1)
- *
+ * @param {string} userId - A Slack user ID
+ * @returns {Promise<object>} An inspiration object
  */
 const getInspiration = userId => {
   return inspiration.get()
@@ -15,15 +15,15 @@ const getInspiration = userId => {
       const userInspiration = allInspiration.filter(inspiration => inspiration.user_id === userId);
       const randomIndex = Math.floor(Math.random() * userInspiration.length);
       return userInspiration[randomIndex];
-    })
-    .catch(console.error);
+    });
 };
 
 /**
+ * Creates a new inspiration object associated with the given user.
  *
- * @param {string} userId -- takes in the Slack user id
- * @param {object} newInspiration -- goes to our inspiration model and 'saves' to our inspiration db
- *
+ * @param {string} userId - A Slack user ID
+ * @param {string} newInspiration - The content for a new inspiration
+ * @returns {Promise<object>} The new inspiration object
  */
 const createInspiration = (userId, newInspiration) => {
   const inspirationObject = {
@@ -34,15 +34,18 @@ const createInspiration = (userId, newInspiration) => {
 };
 
 /**
+ * Checks if the given user owns the given inspiration, and if so, updates the
+ * inspiration with the new content.
  *
- * @param {string} userId -- takes in the Slack user id
- * @param {object} inspirationId -- the db identification number
- * @param {object} newInspiration -- updated inspiration content
- *
+ * @param {string} userId - A Slack user ID
+ * @param {string} inspirationId - An inspiration ID
+ * @param {object} newInspiration - The updated inspiration content
+ * @returns {Promise<object>} The updated inspiration object
+ * @throws Will throw an error if the user doesn't own the inspiration
  */
 const updateInspiration = (userId, inspirationId, newInspiration) => {
   return inspiration.get(inspirationId)
-    .then(results =>{
+    .then(results => {
       const ownerId = results[0].user_id;
       if(userId === ownerId) {
         return inspiration.update(inspirationId, {content: newInspiration});
@@ -53,14 +56,17 @@ const updateInspiration = (userId, inspirationId, newInspiration) => {
 };
 
 /**
+ * Checks if the given user owns the given inspiration, and if so, deletes the
+ * inspiration from the database.
  * 
- * @param {string} userId -- takes in slack user id
- * @param {string} inspirationId -- id of the inspiration object from mongo
- * deletes selected inspirationId
+ * @param {string} userId - A Slack user ID
+ * @param {string} inspirationId - An inspiration ID
+ * @returns {Promise<object>} The deleted inspiration object
+ * @throws Will throw an error if the user doesn't own the inspiration
  */
 const deleteInspiration = (userId, inspirationId) => {
   return inspiration.get(inspirationId)
-    .then(results =>{
+    .then(results => {
       const ownerId = results[0].user_id;
       if(userId === ownerId) {
         return inspiration.delete(inspirationId);
@@ -71,15 +77,16 @@ const deleteInspiration = (userId, inspirationId) => {
 };
 
 /**
- * generates and then returns a random inspriation object from the db
+ * Retrieves a random inspiration from the database.
+ *
+ * @returns {Promise<object>} An inspiration object
  */
 const getAnyInspiration = () => {
   return inspiration.get()
     .then(allInspiration => {
       const randomIndex = Math.floor(Math.random() * allInspiration.length);
       return allInspiration[randomIndex];
-    })
-    .catch(console.error);
+    });
 };
 
 module.exports = {

@@ -2,14 +2,6 @@
 
 const mongoose = require('mongoose');
 
-
-/*
-const capabilities = {
-  admin: ['create', 'read', 'update', 'delete'],
-  user: ['read', 'deleteLocal', 'updateLocal', 'createLocal'],
-};
-*/
-
 /**
  * role capabilities
  */
