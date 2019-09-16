@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: src/models/auth/role-schema.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,32 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: src/models/auth/role-schema.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+const mongoose = require('mongoose');
+
+/**
+ * role capabilities
+ */
+const roleSchema = mongoose.Schema({
+  role: { type: String, required: true }, 
+  capabilities: { type: Array, required: true }, 
+});
 
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+module.exports = mongoose.model('roles', roleSchema);
+</code></pre>
+        </article>
+    </section>
 
 
 
