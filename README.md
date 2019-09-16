@@ -6,26 +6,16 @@ https://get-excited-people.herokuapp.com/
 
 ---------------------------------
 ## Web Application
-***[Explain your app, should be at least a paragraph. What does it do? Why should I use? Sell your product!]***
 
-The web application consists of a frontend written in Razor views, HTML, CSS,
-Bootstrap, Popper, and jQuery. The backend was written in C# using ASP.NET Core 2, Entity Framework Core, and the MVC framework.
+The app we built is a textbot called Get Excited People and it will allow users to create their own library of inspiring quotes, songs, videoes or pictures. And then the textbot will automatically picked a random content from their library and send it to the user once a day.
 
-An interface is provided to create new blog
-posts, view existing blog posts, edit existing blog posts, delete existing
-blog posts, and search by both keywords and usernames. All blog posts can be
-enriched using Azure Language Services (part of Microsoft's Cognitive Services
-suite), Bing Image API, and Parallel Dots (for automated tagging of posts via
-key phrases detected within the post's body). Image enrichments can be added
-based on the overall sentiment score (a range 0.0 - 1.0 related to the mood
-of the post) and key phrases / keywords detected in the posts. Optionally, users
-can choose to opt-out of these features for privacy or data collection concerns.
+Users have access to read, create, update, and delete the contents from their own library by sending commands at the inspirations channel in Slack me. The app checks the user id to make sure they only have access to their own database.
 
 ---------------------------------
 
 ## Tools Used
 Visual Studio Code
-JetBrains WebStorm
+WebStorm
 
 - NodeJS
 - Express 
@@ -37,7 +27,7 @@ JetBrains WebStorm
 
 Clone this repository to your local machine.
 ```
-$ git clone https://github.com/YourRepo/YourProject.git
+$ git clone https://github.com/ginapult-401-advanced-javascript/getexcitedpeople.git
 ```
 Once downloaded, you can either use the dotnet CLI utilities or Visual Studio 2017 (or greater) to build the web application.
 ```
@@ -48,7 +38,7 @@ Install all dependencies needed for the project.
 ```
 Database
 ```
-* explain how to use the database *
+Create a .env file and within the file, add a variable called MONGODB_URI and store your mongodb URI in there.
 ```
 cd YourRepo/YourProject
 npm start
@@ -57,31 +47,30 @@ npm start
 ---------------------------------
 
 ## Usage
-***[Provide some images of your app that shows how it can be used with brief description as title]***
 
-### Overview of Recent Posts
-![Overview of Recent Posts](https://via.placeholder.com/500x250)
+### Create an inspiring content and save it to the database
+![Create command](/assets/create-command.PNG)
 
-### Creating a Post
-![Post Creation](https://via.placeholder.com/500x250)
+### Update a content in the library with its id and new content
+![Update command](/assets/update-command.PNG)
 
-### Enriching a Post
-![Enriching Post](https://via.placeholder.com/500x250)
+### Delete a content in the library with its id
+![Delete command](/assets/delete-command.PNG)
 
-### Viewing Post Details
-![Details of Post](https://via.placeholder.com/500x250)
+### Viewing a random content that is picked from the library
+![Read command](/assets/read-command.PNG)
 
----------------------------
-## Data Flow (Frontend, Backend, REST API)
-***[Add a clean and clear explanation of what the data flow is. Walk me through it.]***
-![Data Flow Diagram](/assets/img/Flowchart.png)
+### Viewing the instructions for using the app
+![Instructions](/assets/instructions.PNG)
 
 ---------------------------
 ## Data Model
 
 ### Overall Project Schema
-***[Add a description of your DB schema. Explain the relationships to me.]***
-![Database Schema](/assets/img/ERD.png)
+
+There are two data schema within the app, one is for user and another one is for the content that is saved in the database.
+![User Schema](/assets/user-schema.PNG)
+![Content Schema](/assets/content-schema.PNG)
 
 ---------------------------
 
