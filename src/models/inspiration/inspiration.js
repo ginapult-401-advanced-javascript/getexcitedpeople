@@ -1,22 +1,23 @@
 'use strict';
 const Model = require('../Model.js');
 
-const mongoose = require('mongoose');
+require('dotenv').config();
 
+const mongoose = require('mongoose');
 const inspirationSchema = mongoose.Schema({
   user_id: { type:String, required: true },
-  // TODO: User readible content_id (auto-increment, unique)
-  // content_id: { type:String, required: true, unique:true },
   content: { type: String, required: true },
   type: { type: String },
 });
+
+const inspirationMongooseModel = mongoose.model('inspirationSchema', inspirationSchema);
 
 /**
  * Class representing a Content Item.
  * @extends Model
  */
 class Inspiration extends Model {
-  constructor() { super(inspirationSchema); }
+  constructor() { super(inspirationMongooseModel); }
 
 }
 module.exports = Inspiration;

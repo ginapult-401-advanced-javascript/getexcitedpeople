@@ -6,6 +6,12 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+
+// Error handling middleware
+const errorHandler = require( './middleware/error.js');
+const notFound = require( './middleware/404.js' );
+
+// Slack command routing
 const slackRoutes = require('./slack/routes.js');
 
 //prepare the express app
@@ -16,13 +22,13 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+// Static Routes
+app.use('/docs', express.static('docs'));
+
+// Routes
 app.use('/slack', slackRoutes); 
 
-//error handling middlware
-const errorHandler = require( './middleware/error.js');
-const notFound = require( './middleware/404.js' );
-
-//catch all/error handling
+// Catchalls
 app.use(notFound);
 app.use(errorHandler);
 
